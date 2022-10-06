@@ -1,5 +1,31 @@
 # DATABASE KEYS CODE DEMO
 
+
+The sql file has code that can be used to demonstrate a way to apply each of the primary, unique and foreign key constraints to a given table  and the issues one can encounter if the data added to the table violates these constraints.
+The code has embedded insertion queries for some sample data for anyone to be able to execute the SQL on their local.
+
+The example considered to demonstrate this topic is of an owners and pets table .
+The owners table  stores a list of owners of pets that have attributes such as owner id, name, city , email id and mobile number.
+The pets table stores a list of pets that the owners have with attributes such as pet id , name , type , owner id .
+
+Below are the columns in both the tables that have constraints defined.
+
+**Owners table:**
+
+owner id - Primar key
+email id - unique key
+mobile number- unique key
+
+**Pets table:**
+
+petid - Primary key
+owner id - foreign keey
+
+
+==============================================================================================================================================
+
+**Keys**:
+
 **Primary Key**
 
 1. A column/Attribute that can uniquely identify each row. 
