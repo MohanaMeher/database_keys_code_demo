@@ -1,35 +1,49 @@
+# DATABASE KEYS CODE DEMO
+
+
+<code>
 drop table if exists owners2;
+
 drop table if exists pets2;
+</code>
     
 
 
------------- PRIMARY KEY ------------
+## PRIMARY KEY
 
---Create table with owner id having primary key constraint
-create table "owners2" (
-    ownerid integer primary key,
-    name varchar(100),
-    city varchar(100)
-);
+Create table with owner id having primary key constraint
+
+
+    create table "owners2" (
+        ownerid integer primary key,
+        name varchar(100),
+        city varchar(100)
+    );
     
----select
-select * from owners2;
+View owners table
 
---Insert record - sample
-insert into owners2 values(6049, 'Debbbie','SF');
+    select * from owners2;
 
----select
-select * from owners2;
+Insert sample record
 
---Insert duplicate record 
-insert into owners2 values(6049, 'Mary','LA');
+    insert into owners2 values(6049, 'Debbbie','SF');
 
---Insert record with null value for owner id
-insert into owners2 values(null, 'Mary','LA');
+View owners table
 
---add another column with primary key constraint
-alter table owners2 
-add id int primary key ;
+    select * from owners2;
+
+Insert duplicate record 
+
+    insert into owners2 values(6049, 'Mary','LA');
+
+Insert record with null value for owner id
+
+    insert into owners2 values(null, 'Mary','LA');
+
+add another column with primary key constraint
+
+    alter table owners2 
+    add id int primary key ;
 
 
 ------------ UNIQUE KEY ------------
@@ -83,61 +97,78 @@ select * from owners2;
 
 
 
------------- FOREIGN KEY ------------
+## FOREIGN KEY 
 
+<code>
 drop table if exists pets2;
+</code>
+<br/><br/>
 
--- Adding foreign key to the ownerid field
--- The foreign key references to the ownerid field of 'owners2' table
-create table pets2 (
-    petid integer primary key,
-    name varchar(100),
-    age integer,
-    type varchar(50),
-    ownerid integer,
-    CONSTRAINT fk_owner
-            FOREIGN KEY (ownerid)     
-                references owners2(ownerid)
-);
+Adding foreign key to the ownerid field.
+The foreign key references to the ownerid field of 'owners2' table.
+<br/>
 
--- drop existing foreign key constraints
-ALTER TABLE pets2
-DROP CONSTRAINT fk_owner;
+    create table pets2 (
+        petid integer primary key,
+        name varchar(100),
+        age integer,
+        type varchar(50),
+        ownerid integer,
+        CONSTRAINT fk_owner
+                FOREIGN KEY (ownerid)     
+                    references owners2(ownerid)
+    );
 
--- add a new foreign key constraint
-ALTER TABLE pets2
-ADD CONSTRAINT fk_owner
-FOREIGN KEY (ownerid)
-REFERENCES owners2(ownerid);
+drop existing foreign key constraints
 
--- bulk inserting values
-insert into pets2 values     (111, 'Little bow bow',2,'cat', 1234),
-                        (122, 'Hitler',12,'dog', 18976),
-                        (124, 'Sherlock',5,'dog', 18976),
-                        (131, 'Satan',3,'cat', 1070);
+    ALTER TABLE pets2
+    DROP CONSTRAINT fk_owner;
 
-select * from pets2;
+add a new foreign key constraint
 
--- Insertion Error because owner with id 1111 does not exist
-INSERT INTO pets2
-VALUES (142, 'Leo',6,'dog', 1111);
+    ALTER TABLE pets2
+    ADD CONSTRAINT fk_owner
+    FOREIGN KEY (ownerid)
+    REFERENCES owners2(ownerid);
 
--- passing null value
-INSERT INTO pets2
-VALUES (142, 'Leo',6,'dog', null);
+bulk inserting values
 
-select * from pets2;
+    insert into pets2 values(111, 'Little bow bow',2,'cat', 1234),
+                            (122, 'Hitler',12,'dog', 18976),
+                            (124, 'Sherlock',5,'dog', 18976),
+                            (131, 'Satan',3,'cat', 1070);
 
--- Again the same insertion error
-UPDATE pets2
-set ownerid = 1234
-where petid = 142;
+View pets table
 
-select * from pets2;
+    select * from pets2;
 
--- The following statement deletes the owner id 1 from the owners2 table:
-DELETE FROM owners2
-WHERE ownerid = 1234;
--- PostgreSQL issues a constraint violation  ON DELETE NO ACTION
--- because the referencing rows of the owner id 1234 still exist in the pets2 table
-qq# database_keys_code_demo
+Insertion Error because owner with id 1111 does not exist
+
+    INSERT INTO pets2
+    VALUES (142, 'Leo',6,'dog', 1111);
+
+passing null value
+
+    INSERT INTO pets2
+    VALUES (142, 'Leo',6,'dog', null);
+
+View pets table
+
+    select * from pets2;
+
+Again the same insertion error
+
+    UPDATE pets2
+    set ownerid = 1234
+    where petid = 142;
+
+View pets table
+    select * from pets2;
+
+The following statement deletes the owner id 1 from the owners2 table:
+
+    DELETE FROM owners2
+    WHERE ownerid = 1234;
+    
+PostgreSQL issues a constraint violation  ON DELETE NO ACTION because the referencing rows of the owner id 1234 still exist in the pets2 table
+
